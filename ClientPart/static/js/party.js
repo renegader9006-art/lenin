@@ -1,74 +1,8 @@
 const API_BASE_URL = `http://${window.location.hostname}:8080`;
-const DEFAULT_TEXT = 'Текст по умолчанию';
 const MODAL_ID = 'metroModal';
 const OVERLAY_ID = 'modalOverlay';
 const CONTENT_ID = 'modalContent';
 const EMPTY_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-
-// Fallback данные
-const FALLBACK_METRO_DATA = {
-    '123': {
-        name: 'МЕТРОПОЛИТЕН',
-        short_desc: DEFAULT_TEXT,
-        full_desc_one: DEFAULT_TEXT,
-        full_desc_two: DEFAULT_TEXT,
-        scheme_desc: DEFAULT_TEXT,
-        modern_desc: DEFAULT_TEXT,
-        struct_desc: DEFAULT_TEXT,
-        partnership_desc: DEFAULT_TEXT,
-        safety_desc: DEFAULT_TEXT,
-        acessable_desc: DEFAULT_TEXT
-    }
-};
-
-const FALLBACK_COMPANY_DATA = {
-    'default': {
-        name: 'ПРЕДПРИЯТИЕ',
-        short_desc: DEFAULT_TEXT,
-        full_desc_one: DEFAULT_TEXT,
-        full_desc_two: DEFAULT_TEXT,
-        spec_desc: DEFAULT_TEXT,
-        struct_desc: DEFAULT_TEXT,
-        quality: DEFAULT_TEXT,
-        contact: DEFAULT_TEXT
-    }
-};
-
-const FALLBACK_COMITET_DATA = {
-    'default': {
-        name: 'КОМИТЕТ',
-        short_desc: DEFAULT_TEXT,
-        full_desc_one: DEFAULT_TEXT,
-        full_desc_two: DEFAULT_TEXT,
-        specs_desc: DEFAULT_TEXT,
-        functions_desc: DEFAULT_TEXT
-    }
-};
-
-const STATIC_METRO_ITEMS = [
-    { id: 'moscow', name: 'Московский метрополитен', image: 'img/metro1.svg' },
-    { id: 'peterburg', name: 'Петербургский метрополитен', image: 'img/metro2.svg' },
-    { id: 'nizhny-novgorod', name: 'Нижегородское метро', image: 'img/metro3.svg' },
-    { id: 'novosibirsk', name: 'Новосибирский метрополитен', image: 'img/metro4.svg' },
-    { id: 'samara', name: 'Самарский метрополитен', image: 'img/metro5.svg' },
-    { id: 'ekaterinburg', name: 'Екатеринбургский метрополитен', image: 'img/metro6.svg' },
-    { id: 'kazan', name: 'Казанский метрополитен', image: 'img/metro7.svg' },
-    { id: 'minsk', name: 'Минский метрополитен', image: 'img/metro8.svg' }
-];
-
-const STATIC_COMPANY_ITEMS = [
-    { id: 'company-1', name: 'Предприятие - участник ассоциации', image: 'img/predp1.svg' },
-    { id: 'company-2', name: 'Предприятие - участник ассоциации', image: 'img/predp2.svg' },
-    { id: 'company-3', name: 'Предприятие - участник ассоциации', image: 'img/predp3.svg' },
-    { id: 'company-4', name: 'Предприятие - участник ассоциации', image: 'img/predp4.svg' }
-];
-
-const STATIC_COMITET_ITEMS = [
-    { id: 'operation', name: 'Комитет по эксплуатации' },
-    { id: 'safety', name: 'Комитет по безопасности' },
-    { id: 'infrastructure', name: 'Комитет по инфраструктуре' },
-    { id: 'rolling-stock', name: 'Комитет по подвижному составу' }
-];
 
 // Утилиты
 function formatTextWithLineBreaks(text) {
@@ -90,61 +24,16 @@ function escapeHtml(str) {
         .replace(/'/g, '&#39;');
 }
 
-function applyStaticImage(card, selector, image) {
-    const img = card.querySelector(selector);
-    const imageBox = img ? img.parentElement : null;
-
-    if (!img || !image) {
-        if (imageBox) imageBox.style.display = 'none';
-        return;
-    }
-
-    img.src = image;
-    img.style.display = 'block';
-    img.dataset.loaded = 'true';
-    if (imageBox) imageBox.style.display = 'flex';
+function isMissingContent(data) {
+    return !data || data.status === 'content aint exists';
 }
 
-function renderStaticMetroItems(grid) {
-    grid.innerHTML = '';
-    STATIC_METRO_ITEMS.forEach(item => {
-        const data = {
-            ...FALLBACK_METRO_DATA['123'],
-            name: item.name,
-            short_desc: item.name
-        };
-        const card = createMetroCard(item.name, data, item.id);
-        applyStaticImage(card, '.metro-item__image img', item.image);
-        grid.appendChild(card);
-    });
+function showNoData(grid, message) {
+    grid.innerHTML = `<p class="no-data">${escapeHtml(message)}</p>`;
 }
 
-function renderStaticCompanyItems(grid) {
-    grid.innerHTML = '';
-    STATIC_COMPANY_ITEMS.forEach(item => {
-        const data = {
-            ...FALLBACK_COMPANY_DATA.default,
-            name: item.name,
-            short_desc: item.name
-        };
-        const card = createPredpriyatiyaCard(item.name, data, item.id);
-        applyStaticImage(card, '.predpriyatiya-item__image img', item.image);
-        grid.appendChild(card);
-    });
-}
-
-function renderStaticComitetItems(grid) {
-    grid.innerHTML = '';
-    STATIC_COMITET_ITEMS.forEach(item => {
-        const data = {
-            ...FALLBACK_COMITET_DATA.default,
-            name: item.name,
-            short_desc: item.name
-        };
-        const card = createComitetCard(item.name, data, item.id);
-        applyStaticImage(card, '.comitet-item__image img');
-        grid.appendChild(card);
-    });
+function showLoadError(grid) {
+    grid.innerHTML = '<p class="error">Ошибка загрузки данных</p>';
 }
 
 function buildNameCandidates(...values) {
@@ -336,12 +225,9 @@ function openMetroModal(metroId, metroData) {
     const modalContent = document.getElementById(CONTENT_ID);
     if (!modal || !modalContent) return;
 
-    let dataToShow = metroData;
-    if (metroData && metroData.status === 'content aint exists') {
-        dataToShow = FALLBACK_METRO_DATA['123'] || FALLBACK_METRO_DATA[metroId];
-    }
+    if (isMissingContent(metroData)) return;
 
-    modalContent.innerHTML = generateMetroContent(dataToShow, metroId);
+    modalContent.innerHTML = generateMetroContent(metroData, metroId);
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
@@ -505,7 +391,7 @@ async function loadMetro() {
         const ids = Array.isArray(listData) ? listData : [];
 
         if (ids.length === 0) {
-            renderStaticMetroItems(grid);
+            showNoData(grid, 'Нет данных о метрополитенах');
             return;
         }
 
@@ -520,15 +406,11 @@ async function loadMetro() {
 
                 const contentData = await contentResp.json();
 
-                if (contentData.status === 'content aint exists') {
-                    const fallbackData = { ...FALLBACK_METRO_DATA['123'], name: id };
-                    const card = createMetroCard(id, fallbackData, id);
-                    grid.appendChild(card);
-                } else {
-                    const name = contentData.name || id;
-                    const card = createMetroCard(name, contentData, id);
-                    grid.appendChild(card);
-                }
+                if (isMissingContent(contentData)) continue;
+
+                const name = contentData.name || id;
+                const card = createMetroCard(name, contentData, id);
+                grid.appendChild(card);
 
                 const img = grid.lastChild.querySelector('.metro-item__image img');
                 if (img) loadMetroLogo(id, img);
@@ -536,9 +418,13 @@ async function loadMetro() {
                 console.error(`Error loading metro ${id}:`, e);
             }
         }
+
+        if (!grid.children.length) {
+            showNoData(grid, 'Нет данных о метрополитенах');
+        }
     } catch (error) {
         console.error('Error loading metro list:', error);
-        renderStaticMetroItems(grid);
+        showLoadError(grid);
     }
 }
 
@@ -592,12 +478,9 @@ function openPredpriyatiyaModal(companyId, companyData) {
     const modalContent = document.getElementById(CONTENT_ID);
     if (!modal || !modalContent) return;
 
-    let dataToShow = companyData;
-    if (companyData && companyData.status === 'content aint exists') {
-        dataToShow = FALLBACK_COMPANY_DATA['default'];
-    }
+    if (isMissingContent(companyData)) return;
 
-    modalContent.innerHTML = generatePredpriyatiyaContent(dataToShow, companyId);
+    modalContent.innerHTML = generatePredpriyatiyaContent(companyData, companyId);
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
@@ -730,7 +613,7 @@ async function loadPredpriyatiya() {
         const ids = Array.isArray(listData) ? listData : [];
 
         if (ids.length === 0) {
-            renderStaticCompanyItems(grid);
+            showNoData(grid, 'Нет данных о предприятиях');
             return;
         }
 
@@ -752,15 +635,21 @@ async function loadPredpriyatiya() {
                 console.error(`Error loading company ${id}:`, e);
             }
 
+            if (isMissingContent(contentData)) continue;
+
             const card = createPredpriyatiyaCard(name, contentData, id);
             grid.appendChild(card);
 
             const img = card.querySelector('.predpriyatiya-item__image img');
             if (img) loadPredpriyatiyaLogo(id, img, [name]);
         }
+
+        if (!grid.children.length) {
+            showNoData(grid, 'Нет данных о предприятиях');
+        }
     } catch (error) {
         console.error('Error loading companies list:', error);
-        renderStaticCompanyItems(grid);
+        showLoadError(grid);
     }
 }
 
@@ -814,12 +703,9 @@ function openComitetModal(comitetId, comitetData, blockType = 'комитет') 
     const modalContent = document.getElementById(CONTENT_ID);
     if (!modal || !modalContent) return;
 
-    let dataToShow = comitetData;
-    if (comitetData && comitetData.status === 'content aint exists') {
-        dataToShow = FALLBACK_COMITET_DATA['default'];
-    }
+    if (isMissingContent(comitetData)) return;
 
-    modalContent.innerHTML = generateComitetContent(dataToShow, comitetId);
+    modalContent.innerHTML = generateComitetContent(comitetData, comitetId);
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
@@ -940,7 +826,7 @@ async function loadComitet() {
         const ids = Array.isArray(listData) ? listData : [];
 
         if (ids.length === 0) {
-            renderStaticComitetItems(grid);
+            showNoData(grid, 'Нет данных о комитетах');
             return;
         }
 
@@ -962,15 +848,21 @@ async function loadComitet() {
                 console.error(`Error loading comitet ${id}:`, e);
             }
 
+            if (isMissingContent(contentData)) continue;
+
             const card = createComitetCard(name, contentData, id, activeBlockType);
             grid.appendChild(card);
 
             const img = card.querySelector('.comitet-item__image img');
             if (img) loadComitetLogo(id, img, activeBlockType);
         }
+
+        if (!grid.children.length) {
+            showNoData(grid, 'Нет данных о комитетах');
+        }
     } catch (error) {
         console.error('Error loading comitet list:', error);
-        renderStaticComitetItems(grid);
+        showLoadError(grid);
     }
 }
 
