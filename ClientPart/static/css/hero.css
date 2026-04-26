@@ -1,0 +1,132 @@
+
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #1a5c9e 0%, #0d4a7a 100%);
+    z-index: 1;
+}
+
+/* .hero__container::before {
+    content: '';
+    position: absolute;
+    top: -180px;
+    right: -250px;
+    width: 800px;
+    height: 800px;
+    background: url('../img/background-pattern1.png') center right/contain no-repeat;
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: -4;
+} */
+
+.hero__container {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 2vw 60px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero__img{
+    z-index: 2;
+    position: absolute;
+    top: -180px;
+    right: -50px;
+    width: 800px;
+    height: 800px;
+    opacity: 0.45;
+}
+
+.hero__title {
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 110%;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-top: 70px;
+    margin-bottom: 32px;
+    max-width: 800px;
+}
+
+.hero__subtitle {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 150%;
+    color: #ffffff;
+    max-width: 800px;
+    opacity: 0.95;
+}
+
+/* Адаптация hero секции (мобильная) */
+@media (max-width: 430px) {
+    .hero::before {
+        background: linear-gradient(180deg, #1a5c9e 0%, #0d4a7a 90%);
+    }
+
+    .hero__container {
+        padding: 208px 16px 40px;
+    }
+
+    .hero__img {
+        top: 10px;
+        right: -90px;
+        width: 420px;
+        height: 420px;
+        opacity: 0.4;
+    }
+
+    .hero__title {
+        margin-top: 40px;
+        margin-bottom: 16px;
+        font-size: 28px;
+        line-height: 120%;
+    }
+
+    .hero__subtitle {
+        font-size: 14px;
+        line-height: 150%;
+        max-width: 100%;
+    }
+}
+
+/* Промежуточная адаптация hero (планшеты и небольшие экраны) */
+@media (min-width: 431px) and (max-width: 1024px) {
+    .hero__container {
+        padding: 140px 24px 56px;
+    }
+
+    .hero__img {
+        top: -140px;
+        right: -160px;
+        width: 640px;
+        height: 640px;
+        opacity: 0.4;
+    }
+
+    .hero__title {
+        margin-top: 32px;
+        margin-bottom: 20px;
+        font-size: 40px;
+        line-height: 120%;
+        max-width: 700px;
+    }
+
+    .hero__subtitle {
+        font-size: 16px;
+        max-width: 640px;
+    }
+}
+
+

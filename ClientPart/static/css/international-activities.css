@@ -1,0 +1,326 @@
+
+.int-section {
+    padding: 80px 0;
+}
+
+.int-section__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2vw;
+}
+
+.section-title--white{
+    color: #f0f4f8;
+    border-bottom: 2px solid #f0f4f8;
+}
+
+.int-section__text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    color: #333333;
+}
+
+.int-section__content {
+    max-width: 1000px;
+}
+
+.int-section__paragraph {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 160%;
+    color: #333333;
+    margin-bottom: 16px;
+}
+
+.int-section__link {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    color: #1a5c9e;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+
+.int-section__link:hover {
+    opacity: 0.7;
+}
+
+.int-section__link--white {
+    color: #ffffff;
+}
+
+/* Светлая секция */
+.int-section--light {
+    background-color: #f5f5f5;
+}
+
+/* Синяя секция */
+.int-section--blue {
+    background-color: #1a5c9e;
+}
+
+.int-section--blue .int-section__paragraph {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.int-section--blue .int-section__content {
+    max-width: 1000px;
+}
+
+/* =============================================
+   СЕКЦИЯ С ЖУРНАЛАМИ (СЕТКА)
+   ============================================= */
+.int-section--magazines {
+    background-color: #f0f4f8;
+    padding: 60px 0;
+}
+
+.magazines-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2vw;
+}
+
+.magazine-item {
+    display: block;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.magazine-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.magazine-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =============================================
+   СЕКЦИЯ ЭЛЕКТРОТРАНС
+   ============================================= */
+.int-section__content--dark .int-section__paragraph {
+    color: #333333;
+    font-size: 14px;
+}
+
+/* =============================================
+   АДАПТАЦИЯ
+   ============================================= */
+@media (max-width: 430px) {
+    .section-title {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .int-section {
+        padding: 40px 0 48px;
+    }
+
+    .int-section__container {
+        padding: 0 16px;
+    }
+
+    .int-section__text,
+    .int-section__link {
+        font-size: 14px;
+        line-height: 150%;
+    }
+
+    .int-section__paragraph {
+        font-size: 13px;
+        line-height: 150%;
+        margin-bottom: 12px;
+    }
+
+    .int-section--magazines {
+        padding: 32px 0 40px;
+    }
+
+    .magazines-grid {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 12px;
+        padding: 0 16px 6px;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .magazines-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .magazines-grid > * {
+        scroll-snap-align: start;
+    }
+
+    .magazine-item {
+        flex: 0 0 260px;
+        border-radius: 12px;
+    }
+}
+
+/* =============================================
+   MAGAZINE POPUP SLIDER
+   ============================================= */
+.magazine-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+}
+
+.magazine-popup.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.magazine-popup__content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.magazine-popup__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+
+.magazine-popup__close:hover {
+    transform: scale(1.1);
+}
+
+.magazine-popup__close img {
+    width: 24px;
+    height: 24px;
+}
+
+.magazine-popup__slider {
+    overflow: hidden;
+}
+
+.magazine-popup__slides {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.magazine-popup__slide {
+    max-width: 600px;
+    object-fit: contain;
+    border-radius: 4px;
+    display: none;
+    padding: 5px 35px 40px 5px;
+}
+
+.magazine-popup__slide--active {
+    display: block;
+}
+
+.magazine-popup__controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.magazine-popup__nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.2s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.magazine-popup__nav:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+.magazine-popup__nav:disabled {
+    opacity: 0;
+    cursor: default;
+}
+
+.magazine-popup__nav img {
+    width: 32px;
+    height: 32px;
+}
+
+.magazine-popup__nav--next img {
+    transform: rotate(180deg);
+}
+
+.magazine-popup__nav--prev img {
+    transform: rotate(0deg);
+}
+
+/* Адаптация попапа */
+@media (max-width: 430px) {
+    .magazine-popup__content {
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        padding: 64px 16px 20px;
+    }
+
+    .magazine-popup__close {
+        top: 16px;
+        right: 12px;
+    }
+
+    .magazine-popup__close img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .magazine-popup__slide {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .magazine-popup__controls {
+        bottom: 16px;
+        right: 12px;
+    }
+
+    .magazine-popup__nav img {
+        width: 28px;
+        height: 28px;
+    }
+}

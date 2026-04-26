@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мероприятия - Международная Ассоциация «Метро»</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/all-events.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <!-- Hero секция -->
+            <section class="hero">
+                <!-- Header будет загружен через JS -->
+                <div id="header-block"></div>
+
+                <div class="hero__container container">
+                    <h1 class="hero__title">МЕРОПРИЯТИЯ</h1>
+                    <p class="hero__subtitle">Предстоящие события и мероприятия Международной Ассоциации «Метро»</p>
+                </div>
+            </section>
+
+            <!-- Фильтр и сетка мероприятий -->
+            <section class="events-section mobile-container">
+                <div class="container">
+                    <!-- Фильтр -->
+                    <div class="events-filter">
+                        <div class="dropdown">
+                            <button class="dropdown__button" id="filter-button">
+                                <span class="dropdown__selected">Все мероприятия</span>
+                                <img src="img/arrow-down.svg" alt="▼" class="dropdown__arrow">
+                            </button>
+                            <div class="dropdown__menu" id="filter-menu">
+                                <div class="dropdown__item" data-filter="all">Все мероприятия</div>
+                                <div class="dropdown__item" data-filter="2026">2026 год</div>
+                                <div class="dropdown__item" data-filter="2025">2025 год</div>
+                                <div class="dropdown__item" data-filter="2024">2024 год</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Контейнер для карточек мероприятий (заполняется через JS) -->
+                    <div class="events-grid" id="events-grid"></div>
+                </div>
+            </section>
+
+            <!-- Footer будет загружен через JS -->
+            <div id="footer-block"></div>
+        </div>
+
+        <!-- Events Popups -->
+        <div class="events-popup" id="events-popup-1">
+            <div class="events-popup__content">
+                <button class="events-popup__close" data-popup-close="events-1">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <h3 class="events-popup__title">Состоится турнир по мини-футболу между командами организаций, входящих в Ассоциацию «Метро».</h3>
+                <p class="events-popup__datetime">02.09.2025 в 19:00</p>
+                <div class="events-popup__text">
+                    <p>В соответствии с Планом работы Международной Ассоциации «Метро» на 2025 год, 6 сентября в г. Санкт-Петербурге состоится турнир по мини-футболу между командами организаций, входящих в Ассоциацию «Метро».</p>
+                    <p>Футбольный турнир «70-80-90» посвящён значимым датам, которые отмечаются в 2025 году: 70 лет Петербургскому метрополитену, 80 лет Великой победы, 90 лет Московскому метрополитену.</p>
+                    <p>Турнир проводится на территории Академия ФК «Зенит».</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="events-popup" id="events-popup-2">
+            <div class="events-popup__content">
+                <button class="events-popup__close" data-popup-close="events-2">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <h3 class="events-popup__title">Проведение Технического совета Главных инженеров метрополитенов и предприятий между собой</h3>
+                <p class="events-popup__datetime">20.05.2025 в 16:00</p>
+                <div class="events-popup__text">
+                    <p>В соответствии с Планом работы Международной Ассоциации «Метро» на 2025 год состоится заседание Технического совета Главных инженеров метрополитенов.</p>
+                    <p>На повестке дня:</p>
+                    <ul class="events-popup__list">
+                        <li>Обсуждение вопросов модернизации инфраструктуры метрополитенов</li>
+                        <li>Внедрение новых технологий обслуживания подвижного состава</li>
+                        <li>Обмен опытом между специалистами предприятий</li>
+                        <li>Утверждение плана работы на следующий период</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="events-popup" id="events-popup-3">
+            <div class="events-popup__content">
+                <button class="events-popup__close" data-popup-close="events-3">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <h3 class="events-popup__title">Запланировано заседание Совета и Общее собрание членов Международной Ассоциации "Метро".</h3>
+                <p class="events-popup__datetime">05.05.2025 в 15:00</p>
+                <div class="events-popup__text">
+                    <p>В соответствии с Планом работы Международной Ассоциации «Метро» на 2025 год запланировано проведение заседания Совета и Общего собрания членов Ассоциации.</p>
+                    <p>Основные вопросы повестки:</p>
+                    <ul class="events-popup__list">
+                        <li>Отчет о деятельности Ассоциации за прошедший период</li>
+                        <li>Утверждение приоритетных направлений деятельности</li>
+                        <li>Рассмотрение заявлений о вступлении в Ассоциацию</li>
+                        <li>Обсуждение планов развития на следующий год</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="events-popup" id="events-popup-4">
+            <div class="events-popup__content">
+                <button class="events-popup__close" data-popup-close="events-4">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <h3 class="events-popup__title">В соответствии с Планом работы на 2025 год с 11.05.2025 по 14.05.2025 в г. Москве состоится XII спартакиада</h3>
+                <p class="events-popup__datetime">28.04.2025 в 17:00</p>
+                <div class="events-popup__text">
+                    <p>В соответствии с Планом работы Международной Ассоциации «Метро» на 2025 год с 11 по 14 мая в г. Москве состоится XII спартакиада среди работников метрополитенов.</p>
+                    <p>Программа спартакиады включает следующие виды соревнований:</p>
+                    <ul class="events-popup__list">
+                        <li>Мини-футбол</li>
+                        <li>Волейбол</li>
+                        <li>Настольный теннис</li>
+                        <li>Шахматы</li>
+                        <li>Легкая атлетика</li>
+                    </ul>
+                    <p>Место проведения: спортивные комплексы г. Москвы.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/all-events.js"></script>
+    <script src="js/header.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница не найдена - Международная Ассоциация «Метро»</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <style>
+        .notfound-section {
+            background-color: #f5f5f5;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notfound-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 600px;
+            height: 100%;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .notfound__container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 2vw;
+        }
+
+        .notfound__info {
+            max-width: 700px;
+        }
+
+        .notfound__title {
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 1;
+            color: #1a5c9e;
+            margin-bottom: 24px;
+        }
+
+        .notfound__subtitle {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 140%;
+            color: #333333;
+            margin-bottom: 16px;
+        }
+
+        .notfound__text {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 160%;
+            color: #333333;
+            margin-bottom: 32px;
+        }
+
+        .notfound__link {
+            display: inline-block;
+            background-color: #1a5c9e;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 16px;
+            transition: background-color 0.2s, opacity 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .notfound__link:hover {
+            background-color: #0f3e6a;
+            opacity: 1;
+        }
+
+        @media (max-width: 430px) {
+            .notfound-section {
+                min-height: 0;
+                display: block;
+            }
+
+            .notfound-section::after {
+                display: none;
+            }
+
+            .notfound__container {
+                padding: 32px 16px 40px;
+            }
+
+            .notfound__title {
+                font-size: 80px;
+                margin-bottom: 16px;
+            }
+
+            .notfound__subtitle {
+                font-size: 20px;
+            }
+
+            .notfound__text {
+                font-size: 14px;
+                margin-bottom: 24px;
+            }
+
+            .notfound__link {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <section class="hero hero--contacts">
+                <div id="header-block"></div>
+
+                <div class="hero__container container">
+                    <h1 class="hero__title" data-locale-key="404-название">СТРАНИЦА НЕ НАЙДЕНА</h1>
+                </div>
+                <img class="hero__img" src="img/background-pattern1.png" alt="">
+            </section>
+
+            <section class="notfound-section">
+                <div class="notfound__container container">
+                    <div class="notfound__info">
+                        <div class="notfound__title">404</div>
+                        <div class="notfound__subtitle">Упс! Кажется, вы забрели не туда</div>
+                        <div class="notfound__text">
+                            Запрашиваемая страница не существует или была перемещена.<br>
+                            Воспользуйтесь навигацией или вернитесь на главную.
+                        </div>
+                        <a href="/" class="notfound__link" data-locale-key="на-главную">На главную</a>
+                    </div>
+                </div>
+            </section>
+
+            <div id="footer-block"></div>
+        </div>
+    </div>
+    
+    <script src="js/header-loader.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/footer.js"></script>
+</body>
+</html>

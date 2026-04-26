@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости - Международная Ассоциация «Метро»</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/all-news.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <!-- Hero секция -->
+            <section class="hero">
+                <!-- Header будет загружен через JS -->
+                <div id="header-block"></div>
+
+                <div class="hero__container container">
+                    <h1 class="hero__title">НОВОСТИ</h1>
+                    <p class="hero__subtitle">Последние новости и события Международной Ассоциации «Метро»</p>
+                </div>
+                <img class="hero__img" src="img/background-pattern1.png" alt="">
+            </section>
+
+            <!-- Фильтр и сетка новостей -->
+            <section class="news-section">
+                <div class="container">
+                    <!-- Фильтр -->
+                    <div class="news-filter">
+                        <div class="dropdown">
+                            <button class="dropdown__button" id="filter-button">
+                                <span class="dropdown__selected">Все новости</span>
+                                <img src="img/arrow-down.svg" alt="▼" class="dropdown__arrow">
+                            </button>
+                            <div class="dropdown__menu" id="filter-menu">
+                                <div class="dropdown__item" data-filter="all">Все новости</div>
+                                <div class="dropdown__item" data-filter="2026">2026 год</div>
+                                <div class="dropdown__item" data-filter="2025">2025 год</div>
+                                <div class="dropdown__item" data-filter="2024">2024 год</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Контейнер для карточек новостей (заполняется через JS) -->
+                    <div class="news-grid" id="news-grid"></div>
+                </div>
+            </section>
+
+            <!-- Footer будет загружен через JS -->
+            <div id="footer-block"></div>
+        </div>
+
+        <!-- News Popups -->
+        <div class="news-popup" id="news-popup-1">
+            <div class="news-popup__content">
+                <button class="news-popup__close" data-popup-close="news-1">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <div class="news-popup__text-wrapper">
+                    <h3 class="news-popup__title">Настало время для Транспортной олимпиады – 2026!</h3>
+                    <p class="news-popup__subtitle">Транспортная олимпиада – 2026 открывает свои двери для талантливых подростков от 14 до 16 лет!</p>
+
+                    <div class="news-popup__section">
+                        <h4 class="news-popup__section-title">Что нужно сделать, чтобы стать участником?</h4>
+                        <ul class="news-popup__list">
+                            <li>До 1 марта заполнить анкету регистрации на сайте Олимпиады <a href="https://olymp.arvtr.ru/2026" target="_blank" class="news-popup__link">https://olymp.arvtr.ru/2026</a></li>
+                            <li>Подписаться на телеграмм-канал <a href="#" class="news-popup__link">Ассоциации работодателей внеуличного транспорта России</a>, чтобы быть в курсе всех новостей и не пропустить важную информацию</li>
+                            <li>Принять участие в отборочном онлайн-этапе</li>
+                            <li>Пройти дальше – в региональный и заключительный этапы, где тебя ждут интересные задания и новые знакомства</li>
+                        </ul>
+                    </div>
+
+                    <div class="news-popup__section">
+                        <h4 class="news-popup__section-title">Что ждет победителей?</h4>
+                        <p class="news-popup__paragraph">Главный приз – путевка в легендарный "Артек" на VII профильную транспортную смену! Это незабываемый опыт, новые знания, встречи с экспертами и единомышленниками.</p>
+                        <p class="news-popup__paragraph">Смена пройдет с 21/22 июня по 11/12 июля – лето, которое ты запомнишь навсегда!</p>
+                        <p class="news-popup__paragraph">Не упусти свой шанс! Это не просто Олимпиада, это твой билет в мир больших возможностей и ярких впечатлений.</p>
+                    </div>
+                </div>
+                <div class="news-popup__image">
+                    <img src="img/news-popap.jpg" alt="Транспортная олимпиада 2026">
+                </div>
+            </div>
+        </div>
+
+        <div class="news-popup" id="news-popup-2">
+            <div class="news-popup__content">
+                <button class="news-popup__close" data-popup-close="news-2">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <div class="news-popup__text-wrapper">
+                    <h3 class="news-popup__title">Визит делегации Международной Ассоциации «Метро» в Пекин и Шанхай</h3>
+                    <p class="news-popup__subtitle">Делегация Ассоциации посетила крупнейшие метрополитены Китая</p>
+
+                    <div class="news-popup__section">
+                        <p class="news-popup__paragraph">С 9 по 12 декабря состоялась рабочая поездка делегации Международной Ассоциации «Метро» в Китайскую Народную Республику. В составе делегации посетили метрополитены Пекина и Шанхая.</p>
+                        <p class="news-popup__paragraph">В ходе визита были проведены встречи с руководством метрополитенов, обсуждены вопросы сотрудничества, обмена опытом и внедрения лучших практик в области организации перевозочного процесса.</p>
+                        <p class="news-popup__paragraph">Особое внимание уделено изучению современных систем управления движением поездов, автоматизации процессов и обеспечения безопасности пассажиров.</p>
+                    </div>
+                </div>
+                <div class="news-popup__image">
+                    <img src="img/news-popap.jpg" alt="Визит делегации в Китай">
+                </div>
+            </div>
+        </div>
+
+        <div class="news-popup" id="news-popup-3">
+            <div class="news-popup__content">
+                <button class="news-popup__close" data-popup-close="news-3">
+                    <img src="img/cross-icon.svg" alt="Закрыть">
+                </button>
+                <div class="news-popup__text-wrapper">
+                    <h3 class="news-popup__title">Конференция руководителей и специалистов Электромеханических служб Международной Ассоциации "Метро"</h3>
+                    <p class="news-popup__subtitle">Ежегодная конференция специалистов электромеханических служб</p>
+
+                    <div class="news-popup__section">
+                        <p class="news-popup__paragraph">21 ноября 2025 года состоялась очередная конференция руководителей и специалистов электромеханических служб метрополитенов – членов Международной Ассоциации «Метро».</p>
+                        <p class="news-popup__paragraph">В мероприятии приняли участие более 50 специалистов из различных метрополитенов России и стран СНГ.</p>
+                        <p class="news-popup__paragraph">Основные темы конференции:</p>
+                        <ul class="news-popup__list">
+                            <li>Модернизация систем электроснабжения</li>
+                            <li>Внедрение энергоэффективных технологий</li>
+                            <li>Опыт эксплуатации нового оборудования</li>
+                            <li>Перспективы развития электромеханических служб</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="news-popup__image">
+                    <img src="img/news-popap.jpg" alt="Конференция электромеханических служб">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/all-news.js"></script>
+    <script src="js/header.js"></script>
+</body>
+</html>

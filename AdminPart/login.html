@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FalsCMS — вход</title>
+    <link rel="stylesheet" href="global.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <h1 class="login-title">Admin</h1>
+        <p class="subtitle">Введите секретный ключ</p>
+
+        <div class="auto-login-status" id="autoLoginStatus"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="secretKey">Ключ доступа</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="secretKey" 
+                        name="secret" 
+                        required 
+                        placeholder="··········"
+                        autocomplete="current-password"
+                        class="login-input"
+                    >
+                    <button type="button" class="toggle-visibility" id="toggleVisibility">👁</button>
+                </div>
+                <div class="error-msg" id="errorMessage">
+                    <span id="errorText">Неверный ключ</span>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span class="btn-text">Войти</span>
+            </button>
+        </form>
+
+        <div class="login-divider"></div>
+        <div class="login-footer">Панель управления</div>
+    </div>
+
+    <script>
+        (function() {
+            const AUTH_ENDPOINT = '/auth';
+            const ADMIN_PATH = '/admin';
+            const STORAGE_KEY = 'admin_secret_key';
+            const STORAGE_TIMESTAMP_KEY = 'admin_secret_timestamp';
+            const SESSION_DURATION = 30 * 60 * 1000;
+
+            const loginForm = document.getElementById('loginForm');
+            const secretKeyInput = document.getElementById('secretKey');
+            const toggleVisibility = document.getElementById('toggleVisibility');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const loginBtn = document.getElementById('loginBtn');
+            const autoLoginStatus = document.getElementById('autoLoginStatus');
+
+            let pressTimer;
+
+            toggleVisibility.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                pressTimer = setTimeout(() => {
+                    secretKeyInput.type = 'text';
+                    toggleVisibility.textContent = '🔒';
+                }, 100);
+            });
+            
+            toggleVisibility.addEventListener('mouseup', () => {
+                clearTimeout(pressTimer);
+                secretKeyInput.type = 'password';
+                toggleVisibility.textContent = '👁';
+            });
+            
+            toggleVisibility.addEventListener('mouseleave', () => {
+                clearTimeout(pressTimer);
+                secretKeyInput.type = 'password';
+                toggleVisibility.textContent = '👁';
+            });
+            
+            toggleVisibility.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                pressTimer = setTimeout(() => {
+                    secretKeyInput.type = 'text';
+                    toggleVisibility.textContent = '🔒';
+                }, 100);
+            });
+            
+            toggleVisibility.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                clearTimeout(pressTimer);
+                secretKeyInput.type = 'password';
+                toggleVisibility.textContent = '👁';
+            });
+            
+            toggleVisibility.addEventListener('touchcancel', () => {
+                clearTimeout(pressTimer);
+                secretKeyInput.type = 'password';
+                toggleVisibility.textContent = '👁';
+            });
+
+            async function checkAutoLogin() {
+                const savedSecret = localStorage.getItem(STORAGE_KEY);
+                const savedTimestamp = localStorage.getItem(STORAGE_TIMESTAMP_KEY);
+                if (!savedSecret || !savedTimestamp) return;
+                if (Date.now() - parseInt(savedTimestamp) > SESSION_DURATION) {
+                    clearStoredCredentials();
+                    return;
+                }
+                autoLoginStatus.textContent = 'проверка...';
+                autoLoginStatus.className = 'auto-login-status checking';
+                try {
+                    const formData = new FormData();
+                    formData.append('secret', savedSecret);
+                    const response = await fetch(AUTH_ENDPOINT, { method: 'POST', body: formData });
+                    const result = await response.text();
+                    if (result.trim().toLowerCase() === 'confirmed') {
+                        autoLoginStatus.textContent = 'автологин...';
+                        setTimeout(() => {
+                            window.location.href = `${ADMIN_PATH}?secret=${encodeURIComponent(savedSecret)}`;
+                        }, 300);
+                    } else throw new Error('Auth failed');
+                } catch {
+                    clearStoredCredentials();
+                    autoLoginStatus.textContent = 'автологин не удался';
+                    autoLoginStatus.className = 'auto-login-status failed';
+                    setTimeout(() => autoLoginStatus.className = 'auto-login-status', 3000);
+                }
+            }
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const secret = secretKeyInput.value.trim();
+                if (!secret) { showError('Введите ключ'); return; }
+                setLoading(true);
+                hideError();
+                try {
+                    const formData = new FormData();
+                    formData.append('secret', secret);
+                    const response = await fetch(AUTH_ENDPOINT, { method: 'POST', body: formData });
+                    const result = await response.text();
+                    if (result.trim().toLowerCase() === 'confirmed') {
+                        saveCredentials(secret);
+                        window.location.href = `${ADMIN_PATH}?secret=${encodeURIComponent(secret)}`;
+                    } else {
+                        showError('Неверный ключ');
+                        secretKeyInput.value = '';
+                        secretKeyInput.focus();
+                    }
+                } catch {
+                    showError('Ошибка сервера');
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            function saveCredentials(s) {
+                localStorage.setItem(STORAGE_KEY, s);
+                localStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
+            }
+            
+            function clearStoredCredentials() {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STORAGE_TIMESTAMP_KEY);
+            }
+            
+            function setLoading(isLoading) {
+                loginBtn.disabled = isLoading;
+                loginBtn.querySelector('.btn-text').textContent = isLoading ? 'Проверка...' : 'Войти';
+                secretKeyInput.disabled = isLoading;
+            }
+            
+            function showError(msg) {
+                errorText.textContent = msg;
+                errorMessage.classList.add('show');
+                secretKeyInput.style.animation = 'shake 0.4s ease-out';
+                setTimeout(() => secretKeyInput.style.animation = '', 400);
+            }
+            
+            function hideError() {
+                errorMessage.classList.remove('show');
+            }
+            
+            secretKeyInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') loginForm.dispatchEvent(new Event('submit'));
+            });
+            
+            checkAutoLogin();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документы - Международная Ассоциация «Метро»</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/document.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <section class="hero hero--documents">
+                <div id="header-block"></div>
+                <div class="hero__container container">
+                    <h1 class="hero__title">ДОКУМЕНТЫ</h1>
+                    <p class="hero__subtitle">В разделе представлены материалы организации, доступные для скачивания.</p>
+                    <ul class="hero__links">
+                        <li><a href="#prof-standards" class="hero__link">Профессиональные стандарты и протоколы профессионально-общественных обсуждений</a></li>
+                        <li><a href="#meetings" class="hero__link">Материалы совещаний</a></li>
+                        <li><a href="#ustav" class="hero__link">Устав Международной Ассоциации «Метро»</a></li>
+                    </ul>
+                </div>
+                <img class="hero__img" src="img/background-pattern1.png" alt="">
+            </section>
+
+            <section class="doc-section doc-section--light" id="ustav">
+                <div class="container doc-section__container">
+                    <h2 class="section-title section-title--underline">Устав Международной Ассоциации «Метро»</h2>
+                    <div id="charter-container"></div>
+                </div>
+            </section>
+
+            <section class="doc-section doc-section--blue" id="prof-standards">
+                <div class="container doc-section__container">
+                    <h2 class="section-title section-title--underline section-title--white">Профессиональные стандарты и протоколы профессионально-общественных обсуждений</h2>
+                    
+                    <div class="standards-list" id="standards-list">
+                        <div class="standards-list__group">
+                            <h3 class="standards-list__group-title">Профессиональные стандарты</h3>
+                            <ul class="standards-list__items" id="professions-list"></ul>
+                        </div>
+
+                        <div class="standards-list__protocols">
+                            <p class="standards-list__subtitle">Протоколы профессионально-общественных обсуждений:</p>
+                            <ol class="standards-list__dates" id="protocols-list"></ol>
+                        </div>
+                    </div>
+
+                    <button class="doc-section__toggle" id="standards-toggle">
+                        <span class="doc-section__toggle-text">см. больше</span>
+                        <img src="img/arrow-down.svg" alt="▼" class="doc-section__toggle-arrow">
+                    </button>
+
+                    <div class="knowledge__container container">
+                        <p class="standards-list__subtitle">База знаний:</p>
+                        <ul class="standards-list__items--knowledge" id="knowledge-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="doc-section doc-section--light" id="meetings">
+                <div class="container doc-section__container">
+                    <h2 class="section-title section-title--underline">Материалы совещаний</h2>
+                    <div id="meetings-container"></div>
+                    <button class="doc-section__toggle doc-section__toggle--light" id="meetings-toggle">
+                        <span class="doc-section__toggle-text">см. больше</span>
+                        <img src="img/arrow-down.svg" alt="▼" class="doc-section__toggle-arrow">
+                    </button>
+                </div>
+            </section>
+
+            <div id="footer-block"></div>
+        </div>
+    </div>
+    <script src="js/header-loader.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/document.js"></script>
+    <script src="js/footer.js"></script>
+</body>
+</html>
