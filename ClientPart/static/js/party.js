@@ -25,7 +25,7 @@ function escapeHtml(str) {
 }
 
 function isMissingContent(data) {
-    return !data || data.status === 'content aint exists';
+    return !data || data.status === 'content aint exists' || Object.keys(data).length === 0;
 }
 
 function showNoData(grid, message) {
@@ -115,20 +115,26 @@ function applyBlobToImage(img, blob) {
 }
 
 // Инициализация
-document.addEventListener('DOMContentLoaded', function() {
+function initPartyPage() {
     loadHeader();
     loadFooter();
 
-    if (document.body.dataset.page === 'committees') {
-        loadComitet();
-    } else {
+    if (document.querySelector('.hero__subtitle') && document.body.dataset.page !== 'committees') {
         loadPartyText();
-        loadMetro();
-        loadPredpriyatiya();
     }
 
+    if (document.getElementById('metro-grid')) loadMetro();
+    if (document.getElementById('predpriyatiya-grid')) loadPredpriyatiya();
+    if (document.getElementById('comitet-grid')) loadComitet();
+
     initModal();
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPartyPage);
+} else {
+    initPartyPage();
+}
 
 // Загрузка текста страницы
 async function loadPartyText() {
@@ -627,12 +633,13 @@ async function loadPredpriyatiya() {
                 const contentResp = await fetch(
                     `${API_BASE_URL}/api/v1/block/предприятия/content?name=${encodeURIComponent(id)}`
                 );
-                if (contentResp.ok) {
-                    contentData = await contentResp.json();
-                    if (contentData.name) name = contentData.name;
-                }
+                if (!contentResp.ok) continue;
+
+                contentData = await contentResp.json();
+                if (contentData.name) name = contentData.name;
             } catch (e) {
                 console.error(`Error loading company ${id}:`, e);
+                continue;
             }
 
             if (isMissingContent(contentData)) continue;
@@ -840,12 +847,13 @@ async function loadComitet() {
                 const contentResp = await fetch(
                     `${API_BASE_URL}/api/v1/block/${activeBlockType}/content?name=${encodeURIComponent(id)}`
                 );
-                if (contentResp.ok) {
-                    contentData = await contentResp.json();
-                    if (contentData.name) name = contentData.name;
-                }
+                if (!contentResp.ok) continue;
+
+                contentData = await contentResp.json();
+                if (contentData.name) name = contentData.name;
             } catch (e) {
                 console.error(`Error loading comitet ${id}:`, e);
+                continue;
             }
 
             if (isMissingContent(contentData)) continue;
